@@ -34,6 +34,14 @@ body {
 
 .circle {
     background-image: url(circle.png);
+}
+
+.cross {
+    background-image: url(cross.png);
+}
+
+.circle,
+.cross {
     background-size: 80%;
     background-position: center;
     background-repeat: no-repeat;
