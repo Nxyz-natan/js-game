@@ -18,7 +18,7 @@ cellElements.forEach((cell, index) => {
 function placeMarker(index) {
 let col = index % 3 
 let row = (index - col) / 3
-if(boardData [row][col] == 0){
+if(boardData [row][col] == 0 && gameOver == false){
 boardData [row][col] = Player;
 Player *= -1;
 drawMarkers();
@@ -45,9 +45,11 @@ function checkResults() {
         let colSum = boardData[0][i] + boardData[1][i] + boardData[2][i];
         if(rowSum == 3 || colSum == 3) {
             endGame(1);
+            return
 
         } else if(rowSum == -3 || colSum == -3) {
             endGame(2);
+            return
 
         }
         
@@ -56,15 +58,18 @@ function checkResults() {
     let diagonalSum2 = boardData[0][2] + boardData[1][1] + boardData[2][0];
     if(diagonalSum1 == 3 || diagonalSum2 == 3) {
         endGame(1);
+        return
 
     } else if(diagonalSum1 == -3 || diagonalSum2 == -3) {
         endGame(2);
+        return
 
     }
     if(boardData[0].indexOf(0) == -1 &&
     boardData[1].indexOf(0) == -1 &&
-    boardData[2].indexOf(0) == -1 &&) {
+    boardData[2].indexOf(0) == -1) {
         endGame(0);
+        return
 
     }
 
@@ -72,9 +77,13 @@ function checkResults() {
 
 function endGame(winner) {
     gameOver = true;
+    const resultElement = document.getElementById("result");
     if(winner == 0) {
+        resultElement.innerText = "It's a tie!"
 
     }else {
+        resultElement.innerText = `Player ${winner} wins!`
 
     }
 }
+
