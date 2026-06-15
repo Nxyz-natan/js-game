@@ -46,10 +46,14 @@ function checkResults() {
         let colSum = boardData[0][i] + boardData[1][i] + boardData[2][i];
         if(rowSum == 3 || colSum == 3) {
             endGame(1);
-            return
+            if(rowSum == 3) drawLine(i, "row");
+            if(colSum == 3) drawLine(i, "col");
+            return;
 
         } else if(rowSum == -3 || colSum == -3) {
             endGame(2);
+            if(rowSum == -3) drawLine(i, "row");
+            if(colSum == -3) drawLine(i, "col");
             return
 
         }
@@ -57,15 +61,10 @@ function checkResults() {
     }
     let diagonalSum1 = boardData[0][0] + boardData[1][1] + boardData[2][2];
     let diagonalSum2 = boardData[0][2] + boardData[1][1] + boardData[2][0];
-    if(diagonalSum1 == 3 || diagonalSum2 == 3) {
-        endGame(1);
-        return
-
-    } else if(diagonalSum1 == -3 || diagonalSum2 == -3) {
-        endGame(2);
-        return
-
-    }
+    if(diagonalSum1 == 3) { endGame(1); drawLine(0, "diag1"); return; }
+    if(diagonalSum1 == -3) { endGame(2); drawLine(0, "diag1"); return; }
+    if(diagonalSum2 == 3) { endGame(1); drawLine(0, "diag2"); return; }
+    if(diagonalSum2 == -3) { endGame(2); drawLine(0, "diag2"); return; }
     if(boardData[0].indexOf(0) == -1 &&
     boardData[1].indexOf(0) == -1 &&
     boardData[2].indexOf(0) == -1) {
@@ -100,4 +99,43 @@ restartButton.addEventListener("click",() => {
         cell.classList.remove("cross", "circle");
     });
     resultElement.innerText = ""
+    const line = document.getElementById("line");
+    line.style.width = "0";
+    line.style.height = "6px";
+    line.style.transform = "";
 });
+
+
+function drawLine(index, type) {
+    const line = document.getElementById("line");
+    const board = document.querySelector(".board");
+    const size = 320;
+    const cellSize = size / 3;
+    line.style.width = size + "px" ;
+    line.style.top = (cellSize * index + cellSize /2) + "px";
+    line.style.left = "0px";
+    if(type == "col") {
+    line.style.width = "6px" ;
+    line.style.top = "0px";
+    line.style.left = (cellSize * index + cellSize /2) + "px"; 
+    line.style.height = size + "px";
+    }
+    if(type == "diag2") {
+    line.style.width = (size * 1.41) + "px" ;
+    line.style.top = size + "px";
+    line.style.left =  "0px"; 
+    line.style.transform = "rotate(-45deg)";
+    line.style.transformOrigin = "bottom left";
+    }
+
+    if(type == "diag1") {
+    line.style.width = (size * 1.41) + "px" ;
+    line.style.top = "0px";
+    line.style.height = "6px";
+    line.style.left = "0px"; 
+    line.style.transform = "rotate(45deg)";
+    line.style.transformOrigin = "top left";
+    }
+    
+
+}
