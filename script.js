@@ -5,6 +5,7 @@ let boardData = [
 ]
 
 let Player = 1;
+let gameOver = false;
 
 
 const cellElements = document.querySelectorAll(".cell")
@@ -21,6 +22,7 @@ if(boardData [row][col] == 0){
 boardData [row][col] = Player;
 Player *= -1;
 drawMarkers();
+checkResults();
 }
 }
 
@@ -34,5 +36,45 @@ function drawMarkers() {
                 cellElements[(row * 3) + col].classList.add("circle");
             }
         }
+    }
+}
+
+function checkResults() {
+    for(let i = 0; i < 3; i++ ) {
+        let rowSum = boardData[i][0] + boardData[i][1] + boardData[i][2];
+        let colSum = boardData[0][i] + boardData[1][i] + boardData[2][i];
+        if(rowSum == 3 || colSum == 3) {
+            endGame(1);
+
+        } else if(rowSum == -3 || colSum == -3) {
+            endGame(2);
+
+        }
+        
+    }
+    let diagonalSum1 = boardData[0][0] + boardData[1][1] + boardData[2][2];
+    let diagonalSum2 = boardData[0][2] + boardData[1][1] + boardData[2][0];
+    if(diagonalSum1 == 3 || diagonalSum2 == 3) {
+        endGame(1);
+
+    } else if(diagonalSum1 == -3 || diagonalSum2 == -3) {
+        endGame(2);
+
+    }
+    if(boardData[0].indexOf(0) == -1 &&
+    boardData[1].indexOf(0) == -1 &&
+    boardData[2].indexOf(0) == -1 &&) {
+        endGame(0);
+
+    }
+
+}
+
+function endGame(winner) {
+    gameOver = true;
+    if(winner == 0) {
+
+    }else {
+
     }
 }
