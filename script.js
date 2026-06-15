@@ -8,7 +8,8 @@ let Player = 1;
 let gameOver = false;
 
 
-const cellElements = document.querySelectorAll(".cell")
+const cellElements = document.querySelectorAll(".cell");
+const resultElement = document.getElementById("result");
 cellElements.forEach((cell, index) => {
     cell.addEventListener("click", () => {
         placeMarker(index);
@@ -77,7 +78,6 @@ function checkResults() {
 
 function endGame(winner) {
     gameOver = true;
-    const resultElement = document.getElementById("result");
     if(winner == 0) {
         resultElement.innerText = "It's a tie!"
 
@@ -87,3 +87,17 @@ function endGame(winner) {
     }
 }
 
+const restartButton = document.getElementById("restart");
+restartButton.addEventListener("click",() => {
+    boardData = [
+    [0,0,0],
+    [0,0,0],
+    [0,0,0]
+    ]
+    Player = 1;
+    gameOver = false;
+    cellElements.forEach(cell => {
+        cell.classList.remove("cross", "circle");
+    });
+    resultElement.innerText = ""
+});
